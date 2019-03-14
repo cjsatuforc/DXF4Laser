@@ -61,7 +61,7 @@ class DxfForLaserAddin(fission.CommandBase):
         button = super().add_button()
         button.toolClipFilename = os.path.join(
             self.resource_dir, 'captions/Thumb.png')
-        panel = self.ui.allToolbarPanels.itemById('SketchPanel')
+        panel = self.ui.allToolbarPanels.itemById('SolidMakePanel')
         panel.controls.addCommand(button)
         button.isPromotedByDefault = True
         button.isPromoted = True
@@ -69,7 +69,7 @@ class DxfForLaserAddin(fission.CommandBase):
 
     def remove_button(self):
         button = self.ui.commandDefinitions.itemById(self.command_id)
-        panel = self.ui.allToolbarPanels.itemById('SketchPanel')
+        panel = self.ui.allToolbarPanels.itemById('SolidMakePanel')
         button_control = panel.controls.itemById(self.command_id)
         if button:
             button.deleteMe()
@@ -85,11 +85,13 @@ class DxfForLaserAddin(fission.CommandBase):
             offset_sketch.isVisible = False
         if perimeter_sketch and cutouts_sketch:
             adsk.doEvents()
+            # get the document name to use as a prefix to the output filename
+            doc_name = self.design.root_component.name # this is from the Fission api not the Fusion one
             file_picker = self.ui.createFileDialog()
             file_picker.isMultiSelectEnabled = False
             file_picker.filter = 'DXF files (*.dxf);;All files (*.*)'
             file_picker.title = 'Save Laser Path to DXF File'
-            file_picker.initialFilename = '{}.dxf'.format(selection_name)
+            file_picker.initialFilename = '{} - {}.dxf'.format(doc_name, selection_name)
             if file_picker.showSave() == adsk.core.DialogResults.DialogOK:
                 if self.split_into_layers.eval():
                     tmp_dir = tempfile.TemporaryDirectory()

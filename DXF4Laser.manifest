@@ -2,12 +2,12 @@
 	"autodeskProduct":	"Fusion360",
 	"type":	"addin",
      "id": "F702FF8A-2E17-4867-A8FF-89FE048FFA1E",
-	"author":	"Ross Korsky",
+	"author":	"Ross Korsky and Eirinn Mackay",
 	"description":	{
 		"":	"Generates a Kerf compensated DXF file to produce laser cut parts with dimensions that match your drawings geometry."
 	},
-	"version":	"1.1.2",
+	"version":	"1.2.0",
 	"runOnStartup":	true,
-	"supportedOS":	"windows",
+	"supportedOS":	"windows|mac",
 	"editEnabled":	true
 }
